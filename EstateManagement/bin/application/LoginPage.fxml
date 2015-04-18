@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="330.0" prefWidth="457.0" styleClass="theme" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <children>
+      <HBox layoutX="134.0" layoutY="113.0" prefHeight="26.0" prefWidth="252.0" spacing="9.0">
+         <children>
+            <Label layoutX="146.0" layoutY="144.0" text="User Name" />
+            <TextField fx:id="userNameTxt" layoutX="199.0" layoutY="140.0" prefHeight="25.0" prefWidth="124.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox layoutX="134.0" layoutY="154.0" prefHeight="25.0" prefWidth="252.0" spacing="18.0">
+         <children>
+            <Label layoutX="146.0" layoutY="185.0" text="Password" />
+            <PasswordField fx:id="passwordTxt" />
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" layoutX="134.0" layoutY="205.0" prefHeight="25.0" prefWidth="206.0" spacing="15.0">
+         <children>
+            <Button fx:id="loginButton" layoutX="100.0" layoutY="232.0" mnemonicParsing="false" onAction="#login" text="Login" />
+            <Button fx:id="resetButton" layoutX="110.0" layoutY="242.0" mnemonicParsing="false" text="Reset" />
+            <Button fx:id="adminButton" layoutX="120.0" layoutY="252.0" mnemonicParsing="false" text="Admin" />
+         </children>
+      </HBox>
+      <Label fx:id="message" layoutX="63.0" layoutY="37.0" prefHeight="17.0" prefWidth="359.0" />
+   </children>
+</AnchorPane>

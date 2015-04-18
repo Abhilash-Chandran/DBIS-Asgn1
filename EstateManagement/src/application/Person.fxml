@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="632.0" prefWidth="426.0" styleClass="theme" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PersonController">
+   <children>
+      <SplitPane dividerPositions="0.9959636730575177" layoutX="225.0" layoutY="137.0" prefHeight="622.0" prefWidth="850.0" styleClass="darkList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TitledPane animated="false" layoutX="35.0" layoutY="90.0" prefHeight="622.0" prefWidth="335.0" text="New Person Details" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="416.0">
+                           <children>
+                              <HBox layoutX="94.0" layoutY="136.0" prefHeight="165.0" prefWidth="271.0">
+                                 <children>
+                                    <VBox prefHeight="282.0" prefWidth="155.0" spacing="16.0">
+                                       <children>
+                                          <Label layoutX="53.0" layoutY="29.0" prefHeight="17.0" prefWidth="151.0" text="First Name" />
+                                          <Label layoutX="63.0" layoutY="39.0" text="Name" />
+                                          <Label layoutX="73.0" layoutY="49.0" text="Address" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="282.0" prefWidth="215.0" spacing="5.0">
+                                       <children>
+                                          <TextField fx:id="firstName" layoutX="141.0" layoutY="29.0" />
+                                          <TextField fx:id="name" layoutX="151.0" layoutY="39.0" />
+                                          <TextField fx:id="address" layoutX="161.0" layoutY="49.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="121.0" layoutY="293.0" spacing="20.0">
+                                 <children>
+                                    <Button layoutX="94.0" layoutY="301.0" mnemonicParsing="false" onAction="#save" text="Save" />
+                                    <Button layoutX="104.0" layoutY="311.0" mnemonicParsing="false" onAction="#cancel" text="Clear" />
+                                    <Button layoutX="114.0" layoutY="321.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                                 </children>
+                              </HBox>
+                              <Label layoutX="94.0" layoutY="65.0" prefHeight="17.0" prefWidth="255.0" />
+                           </children></AnchorPane>
+                    </content>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="632.0" prefWidth="10.0" />
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
