@@ -102,12 +102,12 @@ public class Agent {
 		}
 	}
 
-	public void deleteAgent() {
-		String query = "DELETE ESTATE_AGENT where login = ?)";
-		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
+	public void deleteAgent(String login) {
+		String query = "DELETE FROM ESTATE_AGENT where login = ?";
+		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, false);
 
 		try {
-			pst.setString(1, this.getLogin());
+			pst.setString(1, login);
 
 			pst.execute();
 			pst.close();
@@ -122,17 +122,16 @@ public class Agent {
 		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
 		List<Agent> agentList = new ArrayList<Agent>();
 		try {
-			pst.setString(1, this.getLogin());
 			ResultSet rs = pst.executeQuery();
 			Agent agent;
 			if (rs != null) {
 
 				while (rs.next()) {
 					agent = new Agent();
-					agent.setName(rs.getString(1));
 					agent.setName(rs.getString(2));
-					agent.setName(rs.getString(3));
-					agent.setName(rs.getString(4));
+					agent.setAddress(rs.getString(3));
+					agent.setLogin(rs.getString(4));
+					agent.setPassword(rs.getString(5));
 					agentList.add(agent);
 				}
 			}

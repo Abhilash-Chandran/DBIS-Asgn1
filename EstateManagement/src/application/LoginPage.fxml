@@ -28,7 +28,7 @@
          <children>
             <Button fx:id="loginButton" layoutX="100.0" layoutY="232.0" mnemonicParsing="false" onAction="#login" text="Login" />
             <Button fx:id="resetButton" layoutX="110.0" layoutY="242.0" mnemonicParsing="false" text="Reset" />
-            <Button fx:id="adminButton" layoutX="120.0" layoutY="252.0" mnemonicParsing="false" text="Admin" />
+            <Button fx:id="adminButton" layoutX="120.0" layoutY="252.0" mnemonicParsing="false" onAction="#admin" text="Admin" />
          </children>
       </HBox>
       <Label fx:id="message" layoutX="63.0" layoutY="37.0" prefHeight="17.0" prefWidth="359.0" />

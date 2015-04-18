@@ -92,4 +92,9 @@ public class LoginController {
 	public void login(ActionEvent event) {
 		new EstUtility().navigate("Estate.fxml", "Estate Management");
 	}
+	
+	@FXML
+	public void admin(ActionEvent evt) {
+		new EstUtility().navigate("Admin.fxml", "Welcome Admin.");
+	}
 }

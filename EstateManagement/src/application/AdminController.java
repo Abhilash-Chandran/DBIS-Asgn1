@@ -1,6 +1,5 @@
 package application;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -11,10 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import view.AgentView;
 import db.model.Agent;
 
 public class AdminController {
-	
+
 	@FXML
 	int id;
 
@@ -23,45 +24,77 @@ public class AdminController {
 
 	@FXML
 	TextField password;
-	
+
 	@FXML
 	TextField name;
-	
+
 	@FXML
 	TextField address;
-	
-	@FXML
-	TableView<Agent> agentTable;
-	
-	@FXML
-	TableColumn<Agent, String> colName;
-	
-	@FXML
-	TableColumn<Agent, String> colAddress;
 
 	@FXML
-	TableColumn<Agent, String> colLogin;
+	TableView<AgentView> agentTable;
 
 	@FXML
-	TableColumn<Agent, String> colPwd;
-	
+	TableColumn<AgentView, String> colName;
+
+	@FXML
+	TableColumn<AgentView, String> colAddress;
+
+	@FXML
+	TableColumn<AgentView, String> colLogin;
+
+	@FXML
+	TableColumn<AgentView, String> colPwd;
+
 	@FXML
 	Label message;
-	
-	public TableView<Agent> getAgentTable() {
+
+	public TableView<AgentView> getAgentTable() {
 		return agentTable;
 	}
 
-	public void setAgentTable(TableView<Agent> agentTable) {
+	public void setAgentTable(TableView<AgentView> agentTable) {
 		this.agentTable = agentTable;
 	}
-	
+
 	public TextField getLogin() {
 		return login;
 	}
 
 	public void setLogin(TextField login) {
 		this.login = login;
+	}
+
+	public TableColumn<AgentView, String> getColName() {
+		return colName;
+	}
+
+	public void setColName(TableColumn<AgentView, String> colName) {
+		this.colName = colName;
+	}
+
+	public TableColumn<AgentView, String> getColAddress() {
+		return colAddress;
+	}
+
+	public void setColAddress(TableColumn<AgentView, String> colAddress) {
+		this.colAddress = colAddress;
+	}
+
+	public TableColumn<AgentView, String> getColLogin() {
+		return colLogin;
+	}
+
+	public void setColLogin(TableColumn<AgentView, String> colLogin) {
+		this.colLogin = colLogin;
+	}
+
+	public TableColumn<AgentView, String> getColPwd() {
+		return colPwd;
+	}
+
+	public void setColPwd(TableColumn<AgentView, String> colPwd) {
+		this.colPwd = colPwd;
 	}
 
 	public TextField getPassword() {
@@ -71,13 +104,13 @@ public class AdminController {
 	public void setPassword(TextField password) {
 		this.password = password;
 	}
-	
+
 	public Label getMessage() {
-		return message;
+		return this.message != null ? this.message : new Label();
 	}
 
-	public void setMessage(Label message) {
-		this.message = message;
+	public void setMessage(String message) {
+		getMessage().setText(message);
 	}
 
 	public int getId() {
@@ -87,7 +120,7 @@ public class AdminController {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public TextField getName() {
 		return name;
 	}
@@ -104,12 +137,15 @@ public class AdminController {
 		this.address = address;
 	}
 
-	
 	@FXML
-	public void clear(){
+	public void clear() {
 		new EstUtility().cancel();
 	}
 	
+	public void initialize(){
+		search();
+	}
+
 	@FXML
 	public void save(ActionEvent event) {
 		try {
@@ -119,30 +155,57 @@ public class AdminController {
 			agent.setLogin(getLogin().getText());
 			agent.setPassword(getPassword().getText());
 			agent.saveAgent();
-			setMessage(new Label("Save Successfull."));
 			Thread.sleep(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setMessage("Save Successfull.");
+		search();
+	}
+	
+	
+	
+	@FXML
+	public void delete(ActionEvent evt) {
+		String login = getAgentTable().getSelectionModel().getSelectedItem().getLogin();
+		new Agent().deleteAgent(login);
+		setMessage("Save Successfull.");
+		search();
 	}
 	
 	@FXML
-	public void refreshSearch(ActionEvent evt){
+	public void refreshSearch(ActionEvent evt) {
+		search();
+	}
+	public void search(){
 		List<Agent> agentList = (new Agent()).searchAgent();
-		ObservableList<Agent> agentOblist = FXCollections.observableArrayList(agentList);
-		setAgentTable(new TableView<Agent>(agentOblist));
+		ObservableList<AgentView> agentOblist = convert(agentList);
+		configureTableColumns();
+		getAgentTable().setItems(agentOblist);	
 	}
-	
+
 	@FXML
-	public void logout(ActionEvent event){
-		new EstUtility().navigate("LoginPage.fxml", "Estate Management Login"); 
+	public void logout(ActionEvent event) {
+		new EstUtility().navigate("LoginPage.fxml", "Estate Management Login");
 	}
-	
-	public ObservableList<Agent> convert(List<Agent> agentList){
-		ObservableList<Agent> agentOblist;
-		List<Admin> agents = new ArrayList<Agent>();
-		for(Agent agent: agentList){
-			A
+
+	public ObservableList<AgentView> convert(List<Agent> agentList) {
+		ObservableList<AgentView> agentOblist = FXCollections.observableArrayList();
+		for (Agent agent : agentList) {
+			agentOblist.add(new AgentView(agent.getName(), agent.getAddress(), agent.getLogin(), agent.getPassword()));
 		}
+		return agentOblist;
+	}
+
+	public void configureTableColumns() {
+		getColName().setCellValueFactory(new PropertyValueFactory<AgentView,String>("name"));
+		getColAddress().setCellValueFactory(new PropertyValueFactory<AgentView,String>("address"));
+		getColLogin().setCellValueFactory(new PropertyValueFactory<AgentView,String>("login"));
+		getColPwd().setCellValueFactory(new PropertyValueFactory<AgentView,String>("password"));
+	}
+
+	@FXML
+	public void cancel(ActionEvent evt) {
+
 	}
 }

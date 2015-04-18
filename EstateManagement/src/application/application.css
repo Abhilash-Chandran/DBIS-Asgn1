@@ -99,3 +99,8 @@
     -fx-text-fill: derive(master-color, -20%);
     -fx-font-size: 12px;
 }
+
+.label-message{
+	-fx-text-fill: green;
+    -fx-font-size: 20px;
+}
