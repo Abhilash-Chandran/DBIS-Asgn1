@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import application.EstUtility;
 
 public class Agent {
@@ -84,8 +82,8 @@ public class Agent {
 		}
 	}
 
-	public void updateAgent() {
-		String query = "UPDATE ESTATE_AGENT set name = ? ,address = ?, login = ?, password = ?)";
+	public void updateAgent(String login) {
+		String query = "UPDATE ESTATE_AGENT set name = ? ,address = ?, login = ?, password = ? where login = ? ";
 		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
 
 		try {
@@ -93,6 +91,7 @@ public class Agent {
 			pst.setString(2, this.getAddress());
 			pst.setString(3, this.getLogin());
 			pst.setString(4, this.getPassword());
+			pst.setString(5, login);
 
 			pst.executeUpdate();
 			pst.close();
@@ -104,7 +103,8 @@ public class Agent {
 
 	public void deleteAgent(String login) {
 		String query = "DELETE FROM ESTATE_AGENT where login = ?";
-		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, false);
+		PreparedStatement pst = EstUtility
+				.PreparedStatementSearch(query, false);
 
 		try {
 			pst.setString(1, login);
@@ -142,5 +142,29 @@ public class Agent {
 			e.printStackTrace();
 		}
 		return agentList;
+	}
+
+	public Agent login(String userName, String password) {
+		String query = "SELECT * FROM ESTATE_AGENT where login = ? and password = ?";
+		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, false);
+		Agent agent = null;
+		try {
+			pst.setString(1, userName);
+			pst.setString(2, password);
+			ResultSet rs = pst.executeQuery();
+			if (rs != null && rs.next()) {
+				agent = new Agent();
+				agent.setId(rs.getInt(1));
+				agent.setName(rs.getString(2));
+				agent.setAddress(rs.getString(3));
+				agent.setLogin(rs.getString(4));
+				agent.setPassword(rs.getString(5));
+			}
+			EstUtility.handleDbStuffs(null, pst, rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return agent;
 	}
 }

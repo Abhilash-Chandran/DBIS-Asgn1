@@ -1,5 +1,6 @@
 package application;
 
+import db.model.Agent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -90,11 +91,30 @@ public class LoginController {
 
 	@FXML
 	public void login(ActionEvent event) {
-		new EstUtility().navigate("Estate.fxml", "Estate Management");
+		String userName = getUserNameTxt().getText();
+		String password = getPasswordTxt().getText();
+		Agent currentAgent = new Agent().login(userName, password);
+		if(currentAgent != null){
+			EstUtility.setCurrentAgent(currentAgent);
+			new EstUtility().navigate("Estate.fxml", "Hi "+EstUtility.getCurrentAgent().getName() + " Welome to Estate Management.");
+		}else{
+			setMessage("Incorrect Login! Please try again.");
+		}
+	}
+
+	@FXML
+	public void reset(ActionEvent event){
+		getUserNameTxt().setText("");
+		getPasswordTxt().setText("");
 	}
 	
 	@FXML
 	public void admin(ActionEvent evt) {
-		new EstUtility().navigate("Admin.fxml", "Welcome Admin.");
+		if ("blah".equals(getUserNameTxt().getText())  
+				&& "blah".equals(getPasswordTxt().getText())) {
+			new EstUtility().navigate("Admin.fxml", "Welcome Admin Mr.Blah.");
+		}else{
+			setMessage("Incorrect Login! Please try again.");
+		}
 	}
 }

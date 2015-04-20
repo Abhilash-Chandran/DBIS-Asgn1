@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import db.connection.DB2ConnectionManager;
+import db.model.Agent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -17,8 +18,18 @@ public class EstUtility {
 	}
 
 	public static Stage prevStage;
-	
+
 	public static Stage currStage;
+
+	public static Agent currentAgent;
+
+	public static Agent getCurrentAgent() {
+		return currentAgent;
+	}
+
+	public static void setCurrentAgent(Agent currentAgent) {
+		EstUtility.currentAgent = currentAgent;
+	}
 
 	public static Stage getCurrStage() {
 		return currStage;
@@ -39,8 +50,8 @@ public class EstUtility {
 	public static void hidePrev() {
 		prevStage.close();
 	}
-	
-	public static void hideCurr(){
+
+	public static void hideCurr() {
 		currStage.close();
 	}
 
@@ -67,34 +78,42 @@ public class EstUtility {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * One stop connection and prepare statement dealing.
 	 * 
 	 * @param query
 	 * @return
 	 */
-	public static PreparedStatement PreparedStatementSearch(String query, boolean forInsert){
-		try{
-			if(forInsert){
-				return DB2ConnectionManager.getInstance().getConnection().prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);				
+	public static PreparedStatement PreparedStatementSearch(String query,
+			boolean forInsert) {
+		try {
+			if (forInsert) {
+				return DB2ConnectionManager
+						.getInstance()
+						.getConnection()
+						.prepareStatement(query,
+								PreparedStatement.RETURN_GENERATED_KEYS);
 			}
-			return DB2ConnectionManager.getInstance().getConnection().prepareStatement(query);
-		}catch(Exception e){
+			return DB2ConnectionManager.getInstance().getConnection()
+					.prepareStatement(query);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public void navigate(String screen,String title){
+
+	public void navigate(String screen, String title) {
 		try {
 			EstUtility.setPrevStage(EstUtility.getCurrStage());
 			EstUtility.getCurrStage().hide();
-			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource(screen));
+			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass()
+					.getResource(screen));
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.setTitle(title);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(
+					getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 			EstUtility.setCurrStage(stage);
@@ -102,8 +121,8 @@ public class EstUtility {
 			e.printStackTrace();
 		}
 	}
-	
-	public void cancel(){
+
+	public void cancel() {
 		try {
 			EstUtility.getCurrStage().close();
 			EstUtility.setCurrStage(EstUtility.getPrevStage());
