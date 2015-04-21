@@ -1,0 +1,145 @@
+package db.model;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import application.EstUtility;
+
+public class PurchaseContract {
+public PurchaseContract(){
+		
+	}
+
+int contractno;
+
+int PC_apartment_ID;
+
+int PC_PERSON_ID;
+
+Date purchaseDate;
+
+String Place;
+
+int NoOfInstallments;
+
+int interestRates;
+
+public int getContractno() {
+	return contractno;
+}
+
+public void setContractno(int contractno) {
+	this.contractno = contractno;
+}
+
+public int getPC_apartment_ID() {
+	return PC_apartment_ID;
+}
+
+public void setPC_apartment_ID(int pC_apartment_ID) {
+	PC_apartment_ID = pC_apartment_ID;
+}
+
+public int getPC_PERSON_ID() {
+	return PC_PERSON_ID;
+}
+
+public void setPC_PERSON_ID(int pC_PERSON_ID) {
+	PC_PERSON_ID = pC_PERSON_ID;
+}
+
+public Date getPurchaseDate() {
+	return purchaseDate;
+}
+
+public void setPurchaseDate(Date purchaseDate) {
+	this.purchaseDate = purchaseDate;
+}
+
+public String getPlace() {
+	return Place;
+}
+
+public void setPlace(String place) {
+	Place = place;
+}
+
+public int getNoOfInstallments() {
+	return NoOfInstallments;
+}
+
+public void setNoOfInstallments(int noOfInstallments) {
+	NoOfInstallments = noOfInstallments;
+}
+
+public int getInterestRates() {
+	return interestRates;
+}
+
+public void setInterestRates(int interestRates) {
+	this.interestRates = interestRates;
+}
+
+
+public void saveContract() {
+	String query = "Insert INTO TENANCYCONTRACT(ContractNo,PC_apartment_ID,PC_PERSON_ID,purchaseDate,Place, NoOfInstallments, interestRates) values (?,?,?,?,?,?,?)";
+	PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
+
+	try {
+		pst.setInt(1, this.getContractno());
+		pst.setInt(2, this.getPC_apartment_ID());
+		pst.setInt(3, this.getPC_PERSON_ID());
+		pst.setDate(4, this.getPurchaseDate());
+		pst.setString(5, this.getPlace());
+		pst.setInt(6, this.getNoOfInstallments());
+		pst.setInt(7, this.getInterestRates());
+		pst.execute();
+		pst.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
+
+public void updateContract() {
+	String query = "UPDATE TENANCYCONTRACT set ContractNo = ? TC_apartment_ID = ? TC_PERSON_ID = ? ContractDate = ? StartDate = ? ,Duration = ?, Additional_Costs = ?, Place = ?)";
+	PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
+
+	try {
+		pst.setInt(1, this.getContractno());
+		pst.setInt(2, this.getPC_apartment_ID());
+		pst.setInt(3, this.getPC_PERSON_ID());
+		pst.setDate(4, this.getPurchaseDate());
+		pst.setString(5, this.getPlace());
+		pst.setInt(6, this.getNoOfInstallments());
+		pst.setInt(7, this.getInterestRates());
+		
+
+		pst.executeUpdate();
+		pst.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
+
+public void deleteContract(String ContractNo) {
+	String query = "DELETE FROM TenancyContract where ContractNo = ?";
+	PreparedStatement pst = EstUtility.PreparedStatementSearch(query, false);
+
+	try {
+		pst.setString(1, ContractNo);
+
+		pst.execute();
+		pst.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	}
+
+
+}
