@@ -1,10 +1,19 @@
 package application;
 
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import view.EstateView;
+import db.model.ViewEstate;
 
 public class EstateController {
 	
@@ -14,27 +23,88 @@ public class EstateController {
 	Label message;
 	
 	@FXML
-	Button searchByCity;
+	TextField city;
 	
 	@FXML
-	Button viewContracts;
+	TableView<EstateView> estateTable;
 	
 	@FXML
-	Button createEstate;
+	TableColumn<EstateView, String> colCity;
 	
 	@FXML
-	Button createCustomer;
+	TableColumn<EstateView, String> colPostCode;
 	
 	@FXML
-	Button signContract;
+	TableColumn<EstateView, String> colStreet;
 	
+	@FXML
+	TableColumn<EstateView, String> colStreetNo;
 	
+	@FXML
+	TableColumn<EstateView, String> colSquareArea;
+	
+	public TextField getCity() {
+		return city;
+	}
+
+	public void setCity(TextField city) {
+		this.city = city;
+	}
+
+	public TableView<EstateView> getEstateTable() {
+		return estateTable;
+	}
+
+	public void setEstateTable(TableView<EstateView> estateTable) {
+		this.estateTable = estateTable;
+	}
+
+	public TableColumn<EstateView, String> getColCity() {
+		return colCity;
+	}
+
+	public void setColCity(TableColumn<EstateView, String> colCity) {
+		this.colCity = colCity;
+	}
+
+	public TableColumn<EstateView, String> getColPostCode() {
+		return colPostCode;
+	}
+
+	public void setColPostCode(TableColumn<EstateView, String> colPostCode) {
+		this.colPostCode = colPostCode;
+	}
+
+	public TableColumn<EstateView, String> getColStreet() {
+		return colStreet;
+	}
+
+	public void setColStreet(TableColumn<EstateView, String> colStreet) {
+		this.colStreet = colStreet;
+	}
+
+	public TableColumn<EstateView, String> getColStreetNo() {
+		return colStreetNo;
+	}
+
+	public void setColStreetNo(TableColumn<EstateView, String> colStreetNo) {
+		this.colStreetNo = colStreetNo;
+	}
+
+	public TableColumn<EstateView, String> getColSquareArea() {
+		return colSquareArea;
+	}
+
+	public void setColSquareArea(TableColumn<EstateView, String> colSquareArea) {
+		this.colSquareArea = colSquareArea;
+	}
+
 	public Label getMessage() {
 		return message;
 	}
 
-	public void setMessage(Label message) {
-		this.message = message;
+	public void setMessage(String message) {
+		this.message = new Label(message);
 	}
 
 	public Stage getPrevStage() {
@@ -66,7 +136,31 @@ public class EstateController {
 	}
 
 	@FXML
+	public void initialize(){
+		searchByCity(null);
+	}
+
+	@FXML
 	public void searchByCity(ActionEvent evt){
-		//TO-do search code.
+		List<ViewEstate> vwEstates = new ViewEstate().searchEstates(getCity().getText(),EstUtility.getCurrentAgent().getId());
+		ObservableList<EstateView> estateOblist = convertEstates(vwEstates);
+		configureEstateTableColumns();
+		getEstateTable().setItems(estateOblist);	
+	}
+	
+	public ObservableList<EstateView> convertEstates(List<ViewEstate> estateList) {
+		ObservableList<EstateView> estateOblist = FXCollections.observableArrayList();
+		for (ViewEstate estate : estateList) {
+			estateOblist.add(new EstateView(estate.getEagId()+"",estate.getCity(),estate.getPostalCode()+"",estate.getStreet(),estate.getStreetNo()+"",estate.getSquareArea()+""));
+		}
+		return estateOblist;
+	}
+	
+	public void configureEstateTableColumns() {
+		getColCity().setCellValueFactory(new PropertyValueFactory<EstateView,String>("city"));
+		getColPostCode().setCellValueFactory(new PropertyValueFactory<EstateView,String>("postalCode"));
+		getColSquareArea().setCellValueFactory(new PropertyValueFactory<EstateView,String>("squareArea"));
+		getColStreet().setCellValueFactory(new PropertyValueFactory<EstateView,String>("street"));
+		getColStreetNo().setCellValueFactory(new PropertyValueFactory<EstateView,String>("streetNumber"));
 	}
 }

@@ -5,47 +5,94 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="663.0" prefWidth="943.0" styleClass="theme" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminController">
+<AnchorPane prefHeight="774.0" prefWidth="1192.0" styleClass="theme" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminController">
    <children>
-      <SplitPane dividerPositions="0.3563096500530223" layoutX="225.0" layoutY="137.0" prefHeight="622.0" prefWidth="850.0" styleClass="darkList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.4521812080536913" layoutX="225.0" layoutY="137.0" prefHeight="622.0" prefWidth="850.0" styleClass="darkList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TitledPane animated="false" layoutX="35.0" layoutY="90.0" prefHeight="663.0" prefWidth="294.0" text="Agent Details" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <content>
-                      <AnchorPane>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="774.0" prefWidth="592.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <HBox layoutX="32.0" layoutY="136.0" prefHeight="165.0" prefWidth="271.0">
-                                 <children>
-                                    <VBox spacing="16.0">
+                              <TitledPane animated="false" prefHeight="383.0" prefWidth="592.0" text="New Agent Details" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <AnchorPane prefHeight="317.0" prefWidth="240.0">
                                        <children>
-                                          <Label layoutX="53.0" layoutY="29.0" prefHeight="17.0" prefWidth="151.0" text="Agent Name" />
-                                          <Label layoutX="63.0" layoutY="39.0" text="Agent Address" />
-                                          <Label layoutX="73.0" layoutY="49.0" text="Login ID" />
-                                          <Label text="Password" />
+                                          <HBox layoutX="85.0" layoutY="109.0" prefHeight="165.0" prefWidth="271.0">
+                                             <children>
+                                                <VBox spacing="16.0">
+                                                   <children>
+                                                      <Label layoutX="53.0" layoutY="29.0" prefHeight="17.0" prefWidth="151.0" text="Agent Name" />
+                                                      <Label layoutX="63.0" layoutY="39.0" text="Agent Address" />
+                                                      <Label layoutX="73.0" layoutY="49.0" text="Login ID" />
+                                                      <Label text="Password" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="282.0" prefWidth="215.0" spacing="5.0">
+                                                   <children>
+                                                      <TextField fx:id="name" layoutX="141.0" layoutY="29.0" />
+                                                      <TextField fx:id="address" layoutX="151.0" layoutY="39.0" />
+                                                      <TextField fx:id="login" layoutX="161.0" layoutY="49.0" />
+                                                      <TextField fx:id="password" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="85.0" layoutY="289.0" prefHeight="26.0" prefWidth="192.0" spacing="20.0">
+                                             <children>
+                                                <Button layoutX="94.0" layoutY="301.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="72.0" text="Save" />
+                                                <Button layoutX="104.0" layoutY="311.0" mnemonicParsing="false" onAction="#clearSave" text="Clear" />
+                                             </children>
+                                          </HBox>
+                                          <Label fx:id="message" layoutX="14.0" layoutY="37.0" prefHeight="30.0" prefWidth="481.0" styleClass="label-message" />
                                        </children>
-                                    </VBox>
-                                    <VBox prefHeight="282.0" prefWidth="215.0" spacing="5.0">
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TitledPane animated="false" prefHeight="383.0" prefWidth="592.0" text="Update Agent Details" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <content>
+                                  <AnchorPane prefHeight="129.0" prefWidth="590.0">
                                        <children>
-                                          <TextField fx:id="name" layoutX="141.0" layoutY="29.0" />
-                                          <TextField fx:id="address" layoutX="151.0" layoutY="39.0" />
-                                          <TextField fx:id="login" layoutX="161.0" layoutY="49.0" />
-                                          <TextField fx:id="password" />
+                                          <HBox layoutX="85.0" layoutY="94.0" prefHeight="165.0" prefWidth="271.0">
+                                             <children>
+                                                <VBox spacing="16.0">
+                                                   <children>
+                                                      <Label layoutX="53.0" layoutY="29.0" prefHeight="17.0" prefWidth="151.0" text="Agent Name" />
+                                                      <Label layoutX="63.0" layoutY="39.0" text="Agent Address" />
+                                                      <Label layoutX="73.0" layoutY="49.0" text="Login ID" />
+                                                      <Label text="Password" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="282.0" prefWidth="215.0" spacing="5.0">
+                                                   <children>
+                                                      <TextField fx:id="nameUpd" layoutX="141.0" layoutY="29.0" />
+                                                      <TextField fx:id="addressUpd" layoutX="151.0" layoutY="39.0" />
+                                                      <TextField fx:id="loginUpd" layoutX="161.0" layoutY="49.0" />
+                                                      <TextField fx:id="passwordUpd" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="85.0" layoutY="289.0" spacing="20.0">
+                                             <children>
+                                                <Button layoutX="94.0" layoutY="301.0" mnemonicParsing="false" onAction="#update" text="Update" />
+                                                <Button layoutX="104.0" layoutY="311.0" mnemonicParsing="false" onAction="#clearUpd" text="Clear" />
+                                             </children>
+                                          </HBox>
+                                          <Label fx:id="messageUpd" layoutX="7.0" layoutY="41.0" prefHeight="30.0" prefWidth="498.0" styleClass="label-message" />
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="54.0" layoutY="289.0" spacing="20.0">
-                                 <children>
-                                    <Button layoutX="94.0" layoutY="301.0" mnemonicParsing="false" onAction="#save" text="Save" />
-                                    <Button layoutX="104.0" layoutY="311.0" mnemonicParsing="false" onAction="#cancel" text="Clear" />
-                                    <Button layoutX="114.0" layoutY="321.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-                                 </children>
-                              </HBox>
-                              <Label fx:id="message" layoutX="31.0" layoutY="94.0" prefHeight="17.0" prefWidth="255.0" styleClass="label-message" />
-                           </children></AnchorPane>
-                    </content>
-                  </TitledPane>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="632.0" prefWidth="10.0">
@@ -54,7 +101,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="632.0" prefWidth="456.0">
                            <children>
-                              <TableView fx:id="agentTable" layoutX="45.2" layoutY="38.2" prefHeight="362.0" prefWidth="542.0" AnchorPane.bottomAnchor="254.2000000000001" AnchorPane.leftAnchor="45.2" AnchorPane.rightAnchor="36.200000000000045" AnchorPane.topAnchor="38.2">
+                              <TableView fx:id="agentTable" layoutX="12.2" layoutY="31.2" prefHeight="456.0" prefWidth="642.0" AnchorPane.bottomAnchor="267.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="20.0">
                                 <columns>
                                   <TableColumn fx:id="colName" prefWidth="146.00000309944153" text="Agent Name" />
                                     <TableColumn fx:id="colLogin" minWidth="4.0" prefWidth="158.9999237060547" text="Login" />
@@ -62,9 +109,14 @@
                                   <TableColumn fx:id="colAddress" prefWidth="127.0" text="Address" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="22.0" layoutY="451.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" text="Edit" />
-                              <Button layoutX="140.0" layoutY="451.0" mnemonicParsing="false" onAction="#delete" text="Delete" />
-                              <Button layoutX="237.0" layoutY="452.0" mnemonicParsing="false" onAction="#refreshSearch" text="Refresh Results" />
+                              <HBox layoutX="104.0" layoutY="471.0" spacing="35.0" AnchorPane.bottomAnchor="135.0">
+                                 <children>
+                                    <Button layoutX="22.0" layoutY="451.0" mnemonicParsing="false" onAction="#edit" prefHeight="26.0" prefWidth="67.0" text="Edit" />
+                                    <Button layoutX="140.0" layoutY="451.0" mnemonicParsing="false" onAction="#delete" text="Delete" />
+                                    <Button layoutX="237.0" layoutY="452.0" mnemonicParsing="false" onAction="#refreshSearch" text="Refresh Results" />
+                                    <Button mnemonicParsing="false" onAction="#logout" text="Logout" />
+                                 </children>
+                              </HBox>
                            </children>
                         </AnchorPane>
                     </content>

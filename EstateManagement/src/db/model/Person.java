@@ -1,7 +1,10 @@
 package db.model;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import application.EstUtility;
 
@@ -66,5 +69,39 @@ public class Person {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Person> searchPerson(String name){
+		String query = "SELECT * FROM PERSON";
+		if(name != null && !name.isEmpty()){
+			query = query + " where name = ?";
+		}
+		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
+
+		List<Person> persontList = new ArrayList<Person>();
+		try {
+			if(name != null && !name.isEmpty()){
+				pst.setString(1, name);
+			}
+			ResultSet rs = pst.executeQuery();
+			Person person;
+			if (rs != null) {
+
+				while (rs.next()) {
+					person = new Person();
+					person.setName(rs.getString(3));
+					person.setAddress(rs.getString(4));
+					person.setFirstName(rs.getString(2));
+					person.setId(rs.getInt(1));
+					persontList.add(person);
+				}
+			}
+			EstUtility.handleDbStuffs(null, pst, rs);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return persontList;
 	}
 }

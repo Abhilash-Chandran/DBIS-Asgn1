@@ -32,6 +32,18 @@ public class AdminController {
 	TextField address;
 
 	@FXML
+	TextField loginUpd;
+
+	@FXML
+	TextField passwordUpd;
+
+	@FXML
+	TextField nameUpd;
+
+	@FXML
+	TextField addressUpd;
+
+	@FXML
 	TableView<AgentView> agentTable;
 
 	@FXML
@@ -48,6 +60,10 @@ public class AdminController {
 
 	@FXML
 	Label message;
+	
+	@FXML
+	Label messageUpd;
+	
 
 	public TableView<AgentView> getAgentTable() {
 		return agentTable;
@@ -136,16 +152,51 @@ public class AdminController {
 	public void setAddress(TextField address) {
 		this.address = address;
 	}
+	
+	public TextField getLoginUpd() {
+		return loginUpd;
+	}
 
-	@FXML
-	public void clear() {
-		new EstUtility().cancel();
+	public void setLoginUpd(TextField loginUpd) {
+		this.loginUpd = loginUpd;
+	}
+
+	public TextField getPasswordUpd() {
+		return passwordUpd;
+	}
+
+	public void setPasswordUpd(TextField passwordUpd) {
+		this.passwordUpd = passwordUpd;
+	}
+
+	public TextField getNameUpd() {
+		return nameUpd;
+	}
+
+	public void setNameUpd(TextField nameUpd) {
+		this.nameUpd = nameUpd;
+	}
+
+	public TextField getAddressUpd() {
+		return addressUpd;
+	}
+
+	public void setAddressUpd(TextField addressUpd) {
+		this.addressUpd = addressUpd;
 	}
 	
 	public void initialize(){
 		search();
 	}
 
+	public Label getMessageUpd() {
+		return this.messageUpd != null ? this.messageUpd : new Label();
+	}
+
+	public void setMessageUpd(String messageUpd) {
+		getMessageUpd().setText(messageUpd);
+	}
+	
 	@FXML
 	public void save(ActionEvent event) {
 		try {
@@ -155,21 +206,36 @@ public class AdminController {
 			agent.setLogin(getLogin().getText());
 			agent.setPassword(getPassword().getText());
 			agent.saveAgent();
-			Thread.sleep(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		setMessage("Save Successfull.");
 		search();
+		clearSave(null);
 	}
 	
-	
+	@FXML
+	public void update(ActionEvent event) {
+		try {
+			Agent agent = new Agent();
+			agent.setName(getNameUpd().getText());
+			agent.setAddress(getAddressUpd().getText());
+			agent.setLogin(getLoginUpd().getText());
+			agent.setPassword(getPasswordUpd().getText());
+			agent.updateAgent(getAgentTable().getSelectionModel().getSelectedItem().getLogin());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		setMessageUpd("Update Successfull.");
+		search();
+		clearUpd(null);
+	}
 	
 	@FXML
 	public void delete(ActionEvent evt) {
 		String login = getAgentTable().getSelectionModel().getSelectedItem().getLogin();
 		new Agent().deleteAgent(login);
-		setMessage("Save Successfull.");
+		setMessage("Delete Successfull.");
 		search();
 	}
 	
@@ -177,16 +243,26 @@ public class AdminController {
 	public void refreshSearch(ActionEvent evt) {
 		search();
 	}
+	
 	public void search(){
 		List<Agent> agentList = (new Agent()).searchAgent();
 		ObservableList<AgentView> agentOblist = convert(agentList);
 		configureTableColumns();
 		getAgentTable().setItems(agentOblist);	
 	}
-
+	
 	@FXML
-	public void logout(ActionEvent event) {
-		new EstUtility().navigate("LoginPage.fxml", "Estate Management Login");
+	public void edit(ActionEvent evt){
+		AgentView selAgent = getAgentTable().getSelectionModel().getSelectedItem();
+		if(selAgent != null){
+		getNameUpd().setText(selAgent.getName());
+		getAddressUpd().setText(selAgent.getAddress());
+		getLoginUpd().setText(selAgent.getLogin());
+		getPasswordUpd().setText(selAgent.getPassword());
+		setMessageUpd("You can edit the values here.");
+		}else{
+			setMessageUpd("Please select a record from the search results.");	
+		}
 	}
 
 	public ObservableList<AgentView> convert(List<Agent> agentList) {
@@ -205,7 +281,23 @@ public class AdminController {
 	}
 
 	@FXML
-	public void cancel(ActionEvent evt) {
-
+	public void clearSave(ActionEvent evt) {
+		getName().setText("");
+		getAddress().setText("");
+		getLogin().setText("");
+		getPassword().setText("");
+	}
+	
+	@FXML
+	public void clearUpd(ActionEvent evt) {
+		getNameUpd().setText("");
+		getAddressUpd().setText("");
+		getLoginUpd().setText("");
+		getPasswordUpd().setText("");
+	}
+	
+	@FXML
+	public void logout() {
+		new EstUtility().navigate("LoginPage.fxml", "Estate Management Login");
 	}
 }
