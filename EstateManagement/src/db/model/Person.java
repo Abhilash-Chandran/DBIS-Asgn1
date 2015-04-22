@@ -71,6 +71,23 @@ public class Person {
 		}
 	}
 	
+	public void updatePerson(int id) {
+		String query = "UPDATE PERSON set firstName = ? ,name = ?, address = ? WHERE id = ?";
+		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, true);
+
+		try {
+			pst.setString(1, this.getFirstName());
+			pst.setString(2, this.getName());
+			pst.setString(3, this.getAddress());
+
+			pst.executeUpdate();
+			pst.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public List<Person> searchPerson(String name){
 		String query = "SELECT * FROM PERSON";
 		if(name != null && !name.isEmpty()){
@@ -103,5 +120,20 @@ public class Person {
 			e.printStackTrace();
 		}
 		return persontList;
+	}
+	
+	public void deletePerson(int id) {
+		String query = "DELETE FROM PERSON where id = ?";
+		PreparedStatement pst = EstUtility.PreparedStatementSearch(query, false);
+
+		try {
+			pst.setInt(1, id);
+
+			pst.execute();
+			pst.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
